@@ -1,0 +1,16 @@
+::zilly+
+sys.reset();
+
+Z => Z => Z mult_pos := fn(Z y) -> fn(Z x) -> if(y = 0, 0, x + mult_pos(y - 1)(x));
+
+Z => Z => Z mult := fn(Z y) -> fn(Z x) -> if(if(x < 0, 0 - x, x) < if(y < 0, 0 - y, y), if(x < 0, mult_pos(0 - x)(0 - y), mult_pos(x)(y)), if(y < 0, mult_pos(0 - y)(0 - x), mult_pos(y)(x)));
+
+mult(0)(5)
+mult(5)(0)
+mult(4)(3)
+mult(3)(4)
+mult(0 - 4)(3)
+mult(4)(0 - 3)
+mult(0 - 4)(0 - 3)
+mult(100)(2)
+mult(2)(100)
