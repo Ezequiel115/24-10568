@@ -1,0 +1,26 @@
+Ejercicio 1
+
+// aprovechándonos del hecho de que en el documento de programando con Zilly ICE pag 38 nos proponen definir las funciones not,and,or y eq, las utilizaremos para facilitar la realización de este ejercicio y aquí se las muestro a continuación//
+
+sys.reset()
+Z=>Z not := fn( Z p)-> if(p,0,1);
+Z=>Z=>Z and := fn(Z p)->fn(Z q)-> if(p, if(q,1,0),0); 
+Z=>Z=>Z or := fn(Z p)->fn(Z q)-> if(p, 1, if( q, 1,0));
+Z=>Z=>Z eq := fn(Z n)->fn(Z q)-> and(not(lt(n)(q)))(not(lt(q)(n)));
+
+//ya definidas, proponemos las expresiones solicitadas//
+
+Z => Z => Z de_morgan1 := fn(Z P)->fn(Z Q)-> eq(not(and(P)(Q)))(or(not(P))(not(Q)));
+Z => Z => Z de_morgan2 := fn(Z P)->fn(Z Q)-> eq(not(or(P)(Q)))(and(not(P))(not(Q)));
+
+Ejercicio 2
+
+// igual que en el ejercicio anterior, nos aprovechamos de que en el documento de programando con Zilly ICE también nos proponían crear una función suma llamada add, pero como tal no usare esa función add, simplemente procedemos hacer lo siguiente en 2 simples líneas//
+
+sys.reset()
+Z=>Z chs := fn(Z k)-> sub(k)(0);
+Z=>Z succ := fn(Z z)-> sub( chs(1) )( z );
+
+
+
+

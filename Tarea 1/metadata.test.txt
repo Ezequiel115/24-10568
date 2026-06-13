@@ -1,0 +1,12 @@
+ia utilizada: Gemini (version pro)
+
+Ejercicio 1 (promt): tengo el siguiente ejercicio, no quiero que me des la respuesta baja ninguna circunstancia hasta que yo te lo permita, pero me gustaria que me des una pequeña pista para poder proceder y dime que cosas he de tener en cuenta en el ejercicio 1
+
+Ejercicio 2 (promt): Que cosas debo tener en cuenta para el ejercicio 2, dame una pequeña pista pero no me des todavia la respuesta
+
+Ejercicio 3 (promt): que  cosas debo saber y  tener en cuenta para poder resolver el ejercicio 3 sin dificultades
+(promt): explicame paso a paso de manera detallada la solucion del ejercicio 3 y porque debe ser asi
+
+Ejercicio 4 (promt): explicame paso a paso de manera detallada la solucion del ejercicio 4 y porque debe ser asi
+
+Ejercicio 5 (promt): explicame paso a paso de manera detallada la solucion del ejercicio 5 y porque debe ser asi, si es posible, enseñame otras alternativas de como llegar al resultado deseado. 

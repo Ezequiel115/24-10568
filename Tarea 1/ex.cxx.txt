@@ -1,0 +1,184 @@
+Ejercicio 3
+
+
+#include <vector>  // Para poder usar std::vector
+
+double mean(const std::vector<double>& data) {
+    if (data.empty()) return 0.0;
+    
+    double sum = 0.0;
+    for (double value : data) {
+        sum += value;
+    }
+    
+    return sum / data.size();
+}
+
+double variance(const std::vector<double>& data) {
+    if (data.size() <= 1) return 0.0;
+    
+    double m = mean(data);
+    double sum_sq_diff = 0.0;
+    
+    for (double value : data) {
+        double diff = value - m;
+        sum_sq_diff += (diff * diff);
+    }
+    
+    return sum_sq_diff / (data.size() - 1);
+}
+
+
+
+Ejercicio 4
+
+
+#include <vector>
+#include <cmath> // Necesario para std::sqrt()
+
+// Asumimos que la función double mean(const std::vector<double>& data) del Ejercicio 3 está aquí arriba.
+
+double pearson_r(const std::vector<double>& VA, const std::vector<double>& VB) {
+    // 1. Protecciones de seguridad
+    // Verificamos que sean del mismo tamaño y que tengan más de 1 elemento.
+    if (VA.size() != VB.size() || VA.size() <= 1) {
+        return 0.0; 
+    }
+
+    // 2. Calcular los promedios de ambos vectores usando tu función previa
+    double meanA = mean(VA);
+    double meanB = mean(VB);
+
+    // 3. Variables para acumular las sumatorias de la fórmula
+    double sum_num = 0.0;       // Para el numerador
+    double sum_sq_diffA = 0.0;  // Para la primera parte del denominador
+    double sum_sq_diffB = 0.0;  // Para la segunda parte del denominador
+
+    // 4. Recorrer los vectores simultáneamente usando su índice (i)
+    for (size_t i = 0; i < VA.size(); ++i) {
+        // Diferencia de cada valor con su respectivo promedio
+        double diffA = VA[i] - meanA;
+        double diffB = VB[i] - meanB;
+
+        // Acumular para el numerador: sumamos el producto de las diferencias
+        sum_num += (diffA * diffB);
+
+        // Acumular para el denominador: sumamos las diferencias al cuadrado
+        sum_sq_diffA += (diffA * diffA);
+        sum_sq_diffB += (diffB * diffB);
+    }
+
+    // 5. Calcular el denominador completo (raíz cuadrada de las multiplicaciones)
+    double denominator = std::sqrt(sum_sq_diffA * sum_sq_diffB);
+
+    // 6. Protección final: evitar división por cero si todos los números eran iguales
+    if (denominator == 0.0) {
+        return 0.0;
+    }
+
+    // 7. Resultado final: numerador entre denominador
+    return sum_num / denominator;
+}
+
+
+
+Ejercicio 5
+
+
+#include <vector>
+#include <algorithm> // Para usar std::reverse
+
+using namespace std;
+
+// =====================================================================
+// HERRAMIENTAS AUXILIARES (El "Motor" de las conversiones)
+// =====================================================================
+
+// Convierte un número entero (0-15) a su caracter ('0'-'9' o 'A'-'F')
+char valor_a_char(int valor) {
+    if (valor >= 0 && valor <= 9) return (char)(valor + '0');
+    return (char)(valor - 10 + 'A'); // Para bases > 10
+}
+
+// Convierte un caracter ('0'-'9' o 'A'-'F') a su valor entero (0-15)
+int char_a_valor(char c) {
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+    return 0;
+}
+
+// GENÉRICA 1: Convierte un 'int' (decimal) a un vector<char> en la base dada
+vector<char> int_a_base(int n, int base) {
+    if (n == 0) return {'0'}; // Caso límite
+    
+    vector<char> resultado;
+    while (n > 0) {
+        int residuo = n % base;
+        resultado.push_back(valor_a_char(residuo));
+        n = n / base;
+    }
+    // Como los residuos salen al revés, volteamos el vector
+    reverse(resultado.begin(), resultado.end());
+    return resultado;
+}
+
+// GENÉRICA 2: Convierte un vector<char> de una base dada a un 'int' (decimal)
+int base_a_int(const vector<char>& vec, int base) {
+    int resultado = 0;
+    for (char c : vec) {
+        // Algoritmo de Horner: multiplicamos lo acumulado por la base y sumamos el nuevo dígito
+        resultado = (resultado * base) + char_a_valor(c);
+    }
+    return resultado;
+}
+
+// =====================================================================
+// RESPUESTAS AL EJERCICIO (Implementación de la plantilla)
+// =====================================================================
+
+// 1. Decimal a Alienígena
+vector<char> dec_to_septapus(int n)        { return int_a_base(n, 7); }
+vector<char> dec_to_octopus(int n)         { return int_a_base(n, 8); }
+vector<char> dec_to_hexakaidecapus(int n)  { return int_a_base(n, 16); }
+
+// 2. Alienígena a Decimal 
+// ATENCIÓN: El esqueleto de tu profe pide que devuelva vector<char>, 
+// así que pasamos la base alienígena a int, y luego ese int a un vector en base 10.
+vector<char> septapus_to_dec(vector<char> s) { 
+    int valor_decimal = base_a_int(s, 7); 
+    return int_a_base(valor_decimal, 10);
+}
+vector<char> octopus_to_dec(vector<char> s) { 
+    int valor_decimal = base_a_int(s, 8); 
+    return int_a_base(valor_decimal, 10);
+}
+vector<char> hexakaidecapus_to_dec(vector<char> s) { 
+    int valor_decimal = base_a_int(s, 16); 
+    return int_a_base(valor_decimal, 10);
+}
+
+// 3. Conversiones Inter-Alienígenas (El método "puente")
+vector<char> septapus_to_octopus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 7);
+    return int_a_base(valor_decimal, 8);
+}
+vector<char> septapus_to_hexakaidecapus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 7);
+    return int_a_base(valor_decimal, 16);
+}
+vector<char> octopus_to_septapus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 8);
+    return int_a_base(valor_decimal, 7);
+}
+vector<char> octopus_to_hexakaidecapus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 8);
+    return int_a_base(valor_decimal, 16);
+}
+vector<char> hexakaidecapus_to_septapus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 16);
+    return int_a_base(valor_decimal, 7);
+}
+vector<char> hexakaidecapus_to_octopus(vector<char> s) {
+    int valor_decimal = base_a_int(s, 16);
+    return int_a_base(valor_decimal, 8);
+}
