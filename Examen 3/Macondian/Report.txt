@@ -1,0 +1,36 @@
+
+## 1. Modelos de IA Utilizados
+- Google Gemini (Gemini 3.1 Pro)
+
+---
+
+## 2. Explicación del Algoritmo de Procesamiento de Datos de Sensores
+
+### Contexto del Problema
+Cada sensor Macondiano es un dispositivo compuesto por un arreglo de microsensores. Para obtener la medida sintetizada final del sensor, se aplica un modelo estadístico de suavización que elimina lecturas atípicas (outliers) causadas por fallas en los dispositivos físicos.
+
+### Etapas del Algoritmo
+
+1. Cálculo de Valor Base Representativo (Mediana):
+   Dado el conjunto de lecturas de microsensores M = [m1, m2, ..., mk] para un sensor en un instante dado, se calcula primero la mediana. Se utiliza la mediana en lugar del promedio aritmético inicial para garantizar inmunidad frente a lecturas anómalas extremas que pudieran sesgar el cálculo base.
+
+2. Definición del Margen de Tolerancia (Radio Macondiano):
+   Se calcula el margen de tolerancia Δ a partir del Radio Macondiano de Tolerancia r = 0.08 (8% del valor base):
+   
+   Δ = |Valor_Mediana| × 0.08
+   
+   Los límites de aceptación quedan definidos dentro del rango:
+   [Valor_Mediana - Δ, Valor_Mediana + Δ]
+
+3. Filtrado de Valores Atípicos (Outliers):
+   Se evalúa cada lectura mi del microsensor y se descartan las que queden fuera del intervalo de tolerancia. Si por una falla severa todos los microsensores son descartados, se conserva el conjunto original como respaldo.
+
+4. Síntesis del Sensor Macondiano:
+   El valor final sintetizado del sensor es el promedio aritmético de las lecturas de los microsensores que superaron el filtro de tolerancia.
+
+---
+
+## 3. Justificación de Eficiencia y Complejidad
+
+- Complejidad Temporal: O(k log k) por cada sensor, donde k es el número de microsensores (determinado por el ordenamiento al calcular la mediana). Como k es pequeño y fijo por modelo, el tiempo de procesamiento por lote es de orden lineal O(N) respecto al número total de sensores N.
+- Sobrecarga de Procesamiento: Mantiene un costo de CPU y memoria mínimo, permitiendo procesar el flujo continuo de datos en tiempo real sin retrasos.
