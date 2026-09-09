@@ -1,0 +1,56 @@
+
+Proyecto: Macondian Simulator (Parte II)
+Modelo utilizado: Google Gemini
+
+
+A continuación se presenta un registro de los prompts y consultas realizadas a la IA durante el desarrollo. La IA se utilizó como apoyo para la refactorización de componentes visuales (React), ajustes de CSS global, documentación y depuración de errores en TypeScript.
+
+
+1. IMPLEMENTACIÓN DE LA GRÁFICA (TAREA 3)
+
+Usuario: "ahora vamos con la pregunta 3, que podemos al respecto. [3] (1 punto) Visualicen el procesamiento del sistema con una gráfica (pantalla Chart) (Hasta 2 puntos *adicionales* dependiendo del comportamiento y calidad de su gráfica)"
+IA: [Proporcionó la implementación de un componente Chart en React y SVG puro, con auto-escalado de ejes y múltiples colores para graficar la serie en tiempo real].
+
+2. REFACTORIZACIÓN DE LA UI - VISTA LISTA
+
+Usuario: "quiero que esa lista este centrada y que pueda desplazarme en ella para ver lo que tiene por debajo, o si no hazla mas pequeña [Adjunta captura de pantalla]"
+IA: [Sugirió envolver la tabla en un div contenedor con max-width y overflow-y: auto].
+
+Usuario: "voy a optar por la opcion 1. como introduzco el codigo que me proporcionaste en el archivo List.tsx. aqui esta el codigo: [Pega el código de List.tsx]"
+IA: [Integró los estilos de centrado y scroll en el componente React proporcionado].
+
+Usuario: "me lo puedes hacer mas completo?"
+IA: [Refactorizó List.tsx añadiendo un buscador en tiempo real, un contador de eventos y un "Sticky Header" (encabezado fijo)].
+
+
+3. AJUSTES VISUALES Y MODO OSCURO GLOBAL
+
+Usuario: "gracias, esta perfecto, pero me gustaria que ocupara la pantalla completa de manera tal que no se vea ese fondo blanco [Adjunta captura]"
+IA: [Modificó el CSS del contenedor en List.tsx para que ocupara el 100% del alto y ancho con fondo oscuro].
+
+Usuario: "es posible que el fondo blanco de la pagina pueda cambiarlo de color? [Adjunta captura de Macondian.tsx]"
+IA: [Proporcionó reglas globales para index.css para pintar el body y el header de color oscuro].
+
+Usuario: "quiero que el fondo sea gris mas o menos oscuro"
+IA: [Ajustó las reglas en index.css para usar un gris oscuro tipo slate (#22252a) en lugar de negro puro].
+
+
+4. DOCUMENTACIÓN Y REPORTE
+
+Usuario: "bueno, ahora para finalizar vamos con la tarea 4"
+IA: [Redactó el borrador de Report.md explicando la complejidad O(N) y el uso de la mediana para evitar outliers antes de aplicar el Radio Macondiano].
+
+Usuario: "ese archivo lo creo desde visual studio code y pego lo que me diste? ademas respecto a la codigo que me diste me gustaria que se vea la simbologiam no signos o simbolos todos raros"
+IA: [Ajustó el texto para usar caracteres Unicode limpios (Δ, ×, O(N)) compatibles con cualquier visor Markdown y confirmó el proceso de creación del archivo].
+
+
+5. DEPURACIÓN DE ERRORES (TYPESCRIPT / VITE)
+
+Usuario: "cual es el error? aqui el codigo: /// Macondian.tsx /// [Adjunta captura de error Type 'number[]' is not assignable to type 'string[]']"
+IA: [Explicó que la propiedad `data` del Chart esperaba arreglos de texto, y corrigió la variable que se le pasaba al componente en Macondian.tsx].
+
+Usuario: "algun otro error en macondian.tsx? [Adjunta captura con warnings de variables sin usar]"
+IA: [Indicó que se debía borrar la variable `chartData` sobrante y corregir la importación de React en List.tsx].
+
+Usuario: "cual es el error? aqui el codigo: import { useState } from 'react'... [Adjunta captura del App.tsx base de Vite con errores en imágenes]"
+IA: [Explicó que al borrar los assets de Vite, App.tsx se rompe, y sugirió eliminar el archivo App.tsx por completo ya que el proyecto utiliza Macondian.tsx como arranque principal].
