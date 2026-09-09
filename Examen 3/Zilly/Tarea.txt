@@ -1,0 +1,23 @@
+Z => Z fibo := fn(Z n) => Z -> if(n < 2, n, fibo(n - 1) + fibo(n - 2));
+
+Z => Z sfib := fn(Z n) => Z -> if(n < 1, fibo(0), fibo(n) + sfib(n - 1));
+
+sfib(0)
+sfib(1)
+sfib(3)
+sfib(4)
+sfib(6)
+
+2)
+
+Z => Z zfib := fn(Z n) => Z -> fibo(n + 2) - 1;
+
+zfib(0)
+zfib(1)
+zfib(3)
+zfib(4)
+zfib(6)
+
+3)
+
+Al ejecutar zfib(n), se llama directamente a fibo(n+2). Esto genera un total de $2F_{n+3} - 1$ llamadas recursivas, mientras que al ejecutar sfib(n), el sistema evalúa fibo(n) + sfib(n-1). Aunque llama a fibo de forma repetida descendiendo hasta 0, el total de llamadas de todos estos árboles independientes ($\sum_{i=0}^{n} 2F_{i+1} - 1$) sumado a las iteraciones de la propia sfib resulta en $2F_{n+3} - 2$ operaciones.Respuesta:NO
