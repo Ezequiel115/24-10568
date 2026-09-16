@@ -16,9 +16,9 @@ Cada sensor Macondiano es un dispositivo compuesto por un arreglo de microsensor
 
 2. Definición del Margen de Tolerancia (Radio Macondiano):
    Se calcula el margen de tolerancia Δ a partir del Radio Macondiano de Tolerancia r = 0.08 (8% del valor base):
-   
+
    Δ = |Valor_Mediana| × 0.08
-   
+
    Los límites de aceptación quedan definidos dentro del rango:
    [Valor_Mediana - Δ, Valor_Mediana + Δ]
 
